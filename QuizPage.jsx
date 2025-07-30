@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const QuizPage = () => {
   const [categories, setCategories] = useState([]);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState('');
   const [questions, setQuestions] = useState([]);
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState(0);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/quiz").then((res) => {
+    axios.get('http://localhost:5000/api/quiz').then((res) => {
       const all = res.data.map((q) => q.category);
       setCategories([...new Set(all)]);
     });
@@ -17,14 +17,13 @@ const QuizPage = () => {
 
   useEffect(() => {
     if (selected) {
-      axios
-        .get(`http://localhost:5000/api/quiz?category=${selected}`)
+      axios.get(`http://localhost:5000/api/quiz?category=${selected}`)
         .then((res) => setQuestions(res.data));
     }
   }, [selected]);
 
   const handleAnswer = (correct) => {
-    if (correct) setScore((prev) => prev + 1);
+    if (correct) setScore(score + 1);
     setIndex((prev) => prev + 1);
   };
 
